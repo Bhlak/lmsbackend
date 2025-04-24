@@ -2,7 +2,6 @@ import requests
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import AppUser
@@ -36,7 +35,7 @@ class UserRegistration(APIView):
             'email': email,
             'password': password
         })
-
+        
         if res.status_code == 200:
             data = res.json()
             return data['Token']

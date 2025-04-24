@@ -8,10 +8,13 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     firstname = models.CharField(max_length=30)
     lastname = models.CharField(max_length=30)
+
+    loaned = models.IntegerField(default=0)
+
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    date_joined = models.DateTimeField(default=timezone.now)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

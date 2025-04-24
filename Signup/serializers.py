@@ -5,8 +5,8 @@ class AppUserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
     firstname = serializers.CharField(required=True)
     lastname = serializers.CharField(required=True)
-    matric_no = serializers.CharField(write_only=True, required=False)
-    lec_id = serializers.CharField(write_only=True, required=False)
+    matric_no = serializers.CharField(required=False)
+    lec_id = serializers.CharField(required=False)
 
     class Meta:
         model = AppUser

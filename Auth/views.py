@@ -25,7 +25,6 @@ class LoginView(APIView):
     permission_classes = ( AllowAny, )
 
     def post(self, request, format=None):
-        print(request.user)
 
         if request.user.is_authenticated:
             return Response({"Message": "User Already Logged In", "Error": None}, status=status.HTTP_200_OK)
@@ -46,7 +45,7 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     permission_classes = ( IsAuthenticated, )
-    authentication_classes = ( TokenAuthentication )
+    authentication_classes = ( TokenAuthentication, )
 
     def get(self, request, format=None):
         if request.user.auth_token:
