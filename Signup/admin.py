@@ -9,12 +9,12 @@ from .models import AppUser
 class AppUserAdmin(UserAdmin):
     model = AppUser
     fieldsets=(
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password', 'loaned')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser')}),
          
     )
     
-    list_display = ["email", "id"]
+    list_display = ["email", "id", "loaned"]
 
     search_fields = ("email",)
     ordering = ("id", )

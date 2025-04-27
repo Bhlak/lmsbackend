@@ -10,6 +10,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     lastname = models.CharField(max_length=30)
 
     loaned = models.IntegerField(default=0)
+    banned = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
