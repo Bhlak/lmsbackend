@@ -28,7 +28,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 # {
 # "email": "first@gmail.com",
 # "firstname": "First",
-# "lastname": "User",q
+# "lastname": "User",
 # "password": "truealphas0"
 # }
 

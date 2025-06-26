@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status, filters, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -38,7 +38,7 @@ class BookCreation(APIView):
     
 class BookOps(APIView):
     permission_classes = ( IsAuthenticated, )
-
+    
     def  get(self, request, pk):
         book = get_book(pk)
         return Response({"Message": "Book Retrieved Successfully", "Error": None}, status=status.HTTP_200_OK)
@@ -51,6 +51,13 @@ class BookOps(APIView):
             serializer.save()
             return Response({"Message": "Book Updated Successfully", "Error": None}, status=status.HTTP_202_ACCEPTED)
         return Response({"Message": "Incorrect Parameters Provided", "Error": "Book Update Failed"}, status=status.HTTP_400_BAD_REQUEST)
+
+class BookSearch(generics.ListCreateAPIView):
+    search_fields = ['title', 'author', 'publisher', 'year_published']
+    filter_backends = (filters.SearchFilter,)
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
 
 class BookLoan(APIView):
     permission_classes = ( IsAuthenticated, )
