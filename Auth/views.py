@@ -55,6 +55,20 @@ class LogoutView(APIView):
         return Response({"Message": None, "Error": "User Does Not Have An Auth Token"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+class GetUserDetails(APIView):
+    permission_classes = ( IsAuthenticated, )
+    authentication_classes = ( TokenAuthentication, )
+
+    def get(self, request, format=None):
+        user = AppUser.objects.get(email__exact=request.user.email)
+
+        data = dict()
+
+        data['email'] = user.email
+        data['firstname'] = user.firstname
+        data['lastname'] = user.lastname
+        return Response({"Message": "User Fetched Successfully","Data": data, "Error": None}, status=status.HTTP_200_OK)
+
 class Test(APIView):
     permission_classes = ( IsAuthenticated, )
     authentication_classes = ( TokenAuthentication, )

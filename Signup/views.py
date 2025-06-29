@@ -24,7 +24,13 @@ class UserRegistration(APIView):
 
                 token = self.auth({'email':email, 'password': password})
 
-                return Response({"Message": "User Created And Logged In Successfully", "Token": token, "Error": None}, status=status.HTTP_200_OK)
+                userData = {}
+
+                userData['firstname'] = user.firstname
+                userData['lastname'] = user.lastname
+                userData['email'] = user.email
+
+                return Response({"Message": "User Created And Logged In Successfully", "Token": token, "User": userData, "Error": None}, status=status.HTTP_200_OK)
         return Response({"Message": "User Not Created Successfully", "Error": "User With Email Already Exists"}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
     def auth(self, user):
