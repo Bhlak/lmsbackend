@@ -98,7 +98,7 @@ class BookLoan(APIView):
 
                 return Response({"Message": "Loan Created Successfully", "Data": serializer.data, "Error": None}, status=status.HTTP_201_CREATED)
             return Response({"Message": "Book Already Loaned Out", "Error": "Loan Creation Failed"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"Message": "Incorrect Parameters Provided For Loan", "Error": "Loan Creation Failed"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"Message": "Book Unavailable", "Error": "Loan Creation Failed"}, status=status.HTTP_400_BAD_REQUEST)
 
     # Book Return = Loan Deletion
     def delete(self, request, pk):

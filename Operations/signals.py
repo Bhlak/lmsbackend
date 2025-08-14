@@ -13,5 +13,3 @@ def loanReduction(sender, instance, using, **kwargs):
 
     book.available = True
     book.save()
-
-    

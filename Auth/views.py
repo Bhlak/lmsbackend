@@ -24,6 +24,8 @@ def getUsers(request):
 class LoginView(APIView):
     permission_classes = ( AllowAny, )
 
+
+
     def post(self, request, format=None):
 
         if request.user.is_authenticated:
@@ -34,13 +36,19 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
+        is_staff = serializer.validated_data["staff"]
+
 
         if not user.check_password(data['password']):
             return Response({"Message": "User Authentication Failed", "Error": "Incorrect Details"}, status=status.HTTP_404_NOT_FOUND)
 
         token, created = Token.objects.get_or_create(user=user)
 
-        return Response({"Message": "User Logged In Successfully","Token": token.key, "Error": None}, status=status.HTTP_200_OK)
+        userSerializer = AppUserSerializer(user)
+        filteredUser = {key: userSerializer.data[key] for key in ['email', 'firstname', 'lastname']}
+        filteredUser["is_staff"] = is_staff
+        # print(filteredUser)
+        return Response({"Message": "User Logged In Successfully","Token": token.key, "User": filteredUser, "Error": None}, status=status.HTTP_200_OK)
 
 
 class LogoutView(APIView):

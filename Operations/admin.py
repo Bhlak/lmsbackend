@@ -5,7 +5,7 @@ from .models import Book, Loan
 @admin.register(Book)
 class Book(admin.ModelAdmin):
     model = Book
-    list_display = ('title', 'author')
+    list_display = ('title', 'author', 'publisher', 'year_published', 'available')
     search_fields = ('title', 'author')
 
 @admin.register(Loan)

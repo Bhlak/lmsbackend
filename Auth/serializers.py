@@ -10,7 +10,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AppUser
-        fields = ["email", "password"]
+        fields = ["email", "password", "is_staff"]
 
     def validate(self, data):
         email = data.get('email', None)
@@ -21,6 +21,7 @@ class LoginSerializer(serializers.ModelSerializer):
                 user = authenticate(email=email, password=password)
                 if user:
                     data["user"] = user
+                    data["staff"] = user.is_staff
                 else:
                     raise ValueError("Authentication Error")
         else:
