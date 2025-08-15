@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
+import dj_database_url
 from pathlib import Path
-# import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*%6bx!0!db5snlrg#oht%bpi-ck9@hee2-+!fn8so#v&l0akl)'
+# SECRET_KEY = 'django-insecure-*%6bx!0!db5snlrg#oht%bpi-ck9@hee2-+!fn8so#v&l0akl)'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -87,13 +90,16 @@ WSGI_APPLICATION = 'lmsbackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'NAME_OF_DB',
-        'USER': 'DB_USER_NAME',
-        'PASSWORD': 'DB_PASSWORD',
-        'HOST': 'localhost',
-        'PORT': 'PORT_NUMBER',
+        'NAME': 'Library',
+        'USER': 'library_gc1q_user',
+        'PASSWORD': 'dXXJGt5KkeXmsKoEc5Q3rJvEJ4GnJYhD',
+        'HOST': 'dpg-d2fa9bmmcj7s73ej3iu0-a',
+        'PORT': '5432',
     }
 }
+
+database_url = os.environ.get("DATABASE_URL")
+DATABASES["default"] = dj_database_url.parse(database_url)
 
 
 # Password validation
