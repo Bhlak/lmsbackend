@@ -9,7 +9,7 @@ from .models import AppUser, Student
 class AppUserAdmin(UserAdmin):
     model = AppUser
     fieldsets=(
-        (None, {'fields': ('email', 'password', 'loaned')}),
+        (None, {'fields': ('email', 'firstname', 'lastname', 'password', 'loaned')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser')}),
          
     )
