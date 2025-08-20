@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Book, Loan
+from Signup.models import AppUser
 from .serializers import BookSerializer, LoanSerializer
 
 
@@ -62,8 +63,14 @@ class BookSearch(generics.ListCreateAPIView):
 class UserLoans(APIView):
     permission_classes = ( IsAuthenticated, )
 
-    def get(self, pk):
-        queryset = Loan.objects.filter(borrower_exact=pk)
+    def get(self, request, format=None):
+        data = request.data
+        email = data['email']
+
+        user = AppUser.objects.get(email__exact=email)
+
+        # print(email)
+        queryset = Loan.objects.filter(borrower_exact=user)
         loans = LoanSerializer(queryset, many=True)
         return Response({"Message": "Loans Retrieved", "Loans": loans.data, "Error": None}, status=status.HTTP_200_OK)
 

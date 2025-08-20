@@ -7,6 +7,6 @@ urlpatterns = [
     path('new/', BookCreation.as_view()),
     path('book/<int:pk>/', BookOps.as_view()),
     path('loan/<int:pk>/', BookLoan.as_view()),
-    path('loans/<int:pk>/', UserLoans.as_view()),
+    path('loans/', UserLoans.as_view()),
     path('search/', BookSearch.as_view()),
 ]
