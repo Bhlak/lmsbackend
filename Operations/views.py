@@ -59,6 +59,14 @@ class BookSearch(generics.ListCreateAPIView):
     serializer_class = BookSerializer
 
 
+class UserLoans(APIView):
+    permission_classes = ( IsAuthenticated, )
+
+    def get(self, pk):
+        queryset = Loan.objects.filter(borrower_exact=pk)
+        loans = LoanSerializer(queryset, many=True)
+        return Response({"Message": "Loans Retrieved", "Loans": loans.data, "Error": None}, status=status.HTTP_200_OK)
+
 class BookLoan(APIView):
     permission_classes = ( IsAuthenticated, )
 
