@@ -70,7 +70,7 @@ class UserLoans(APIView):
         user = AppUser.objects.get(email__exact=email)
 
         # print(email)
-        queryset = Loan.objects.filter(borrower_exact=user)
+        queryset = Loan.objects.filter(borrower__exact=user)
         loans = LoanSerializer(queryset, many=True)
         return Response({"Message": "Loans Retrieved", "Loans": loans.data, "Error": None}, status=status.HTTP_200_OK)
 
