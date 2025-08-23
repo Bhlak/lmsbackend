@@ -16,9 +16,10 @@ from .serializers import LoginSerializer
 
 @api_view(['GET'])
 def getUsers(request):
+    permission_classes = ( IsAuthenticated,)
     users = AppUser.objects.all()
     serializer = AppUserSerializer(users, many=True)
-    return Response(serializer.data)
+    return Response({"Message": "Users Retrieved Successfully", "Error": None, "Data": serializer.data}, status=status.HTTP_200_OK)
 
 
 class LoginView(APIView):

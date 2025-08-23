@@ -10,11 +10,6 @@ from .serializers import AppUserSerializer
 class UserRegistration(APIView):
     permission_classes = (AllowAny,)
 
-    def get(self, request, format=None):
-        queryset = AppUser.objects.all()
-        users = AppUserSerializer(queryset, many=True)
-        return Response({"Message": "Users Retrieved", "Error": None, "Data": users.data}, status=status.HTTP_200_OK))
-
     def post(self, request, format=None):
         email = request.data['email']
         password = request.data['password']
