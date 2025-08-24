@@ -1,11 +1,15 @@
 import requests
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.authtoken.models import Token
 
 from .models import AppUser
 from .serializers import AppUserSerializer
+
+from Auth.models import Token
+from Auth.serializers import LoginSerializer
 
 class UserRegistration(APIView):
     permission_classes = (AllowAny,)
@@ -37,11 +41,24 @@ class UserRegistration(APIView):
         email = user.get('email', None)
         password = user.get('password', None)
 
-        res = requests.post('https://lms-7czt.onrender.com/auth/login/', data={
+        # res = requests.post('https://lms-7czt.onrender.com/auth/login/', data={
+        #     'email': email,
+        #     'password': password
+        # })
+        
+        # if res.status_code == 200:
+        #     data = res.json()
+        #     return data['Token']
+
+        data = {
             'email': email,
             'password': password
-        })
-        
-        if res.status_code == 200:
-            data = res.json()
-            return data['Token']
+        }
+        serializer = LoginSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        is_staff = serializer.validated_data["staff"]
+
+        token, created = Token.objects.get_or_create(user=user)
+
+        return token 
