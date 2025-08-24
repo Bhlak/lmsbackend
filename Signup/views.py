@@ -61,4 +61,4 @@ class UserRegistration(APIView):
 
         token, created = Token.objects.get_or_create(user=user)
 
-        return token 
+        return token.key
