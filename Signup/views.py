@@ -8,7 +8,7 @@ from rest_framework.authtoken.models import Token
 from .models import AppUser
 from .serializers import AppUserSerializer
 
-from Auth.models import Token
+# from Auth.models import Token
 from Auth.serializers import LoginSerializer
 
 class UserRegistration(APIView):
