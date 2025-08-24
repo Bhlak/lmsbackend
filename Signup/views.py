@@ -37,7 +37,7 @@ class UserRegistration(APIView):
         email = user.get('email', None)
         password = user.get('password', None)
 
-        res = requests.post('http://127.0.0.1:8000/auth/login/', data={
+        res = requests.post('https://lms-7czt.onrender.com/auth/login/', data={
             'email': email,
             'password': password
         })
