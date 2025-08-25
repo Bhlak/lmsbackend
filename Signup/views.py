@@ -45,7 +45,7 @@ class UserRegistration(APIView):
             user.save()
         except Exception as e:
             return Response({"Message": "User Ban Unsuccessful", "Error": e}, status=status.HTTP_400_BAD_REQUEST)
-        serializer = AppUserSerializer(user, data=data, partial=True)
+        serializer = AppUserSerializer(user)
         return Response({"Message": "User Banned Successfully", "Error": None, "Data": serializer.data}, status=status.HTTP_200_OK)
         
 
