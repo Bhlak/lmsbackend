@@ -36,6 +36,19 @@ class UserRegistration(APIView):
 
                 return Response({"Message": "User Created And Logged In Successfully", "Token": token, "User": userData, "Error": None}, status=status.HTTP_200_OK)
         return Response({"Message": "User Not Created Successfully", "Error": "User With Email Already Exists"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    
+    def patch(self, request, format=None):
+        data = request.data
+        email = data.pop('email', '')
+        user = AppUser.objects.get(email__exact=email)
+        try:
+            user.banned = True
+            user.save()
+        except Exception as e:
+            return Response({"Message": "User Ban Unsuccessful", "Error": e}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = AppUserSerializer(user, data=data, partial=True)
+        return Response({"Message": "User Banned Successfully", "Error": None, "Data": serializer.data}, status=status.HTTP_200_OK)
+        
 
     def auth(self, user):
         email = user.get('email', None)
