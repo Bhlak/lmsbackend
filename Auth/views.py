@@ -25,8 +25,6 @@ def getUsers(request):
 class LoginView(APIView):
     permission_classes = ( AllowAny, )
 
-
-
     def post(self, request, format=None):
 
         if request.user.is_authenticated:
@@ -42,6 +40,9 @@ class LoginView(APIView):
 
         if not user.check_password(data['password']):
             return Response({"Message": "User Authentication Failed", "Error": "Incorrect Details"}, status=status.HTTP_404_NOT_FOUND)
+
+        if user.banned:
+            return Response({"Message": "User Authentication Failed", "Error": "User Banned"}, status=status.HTTP_401_UNAUTHORIZED)
 
         token, created = Token.objects.get_or_create(user=user)
 
