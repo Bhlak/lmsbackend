@@ -53,15 +53,6 @@ class UserRegistration(APIView):
         email = user.get('email', None)
         password = user.get('password', None)
 
-        # res = requests.post('https://lms-7czt.onrender.com/auth/login/', data={
-        #     'email': email,
-        #     'password': password
-        # })
-        
-        # if res.status_code == 200:
-        #     data = res.json()
-        #     return data['Token']
-
         data = {
             'email': email,
             'password': password
